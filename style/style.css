@@ -1,0 +1,10 @@
+   /* Hace que el contenido ocupe toda la pantalla */
+   html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+.content {
+    flex: 1;
+}
