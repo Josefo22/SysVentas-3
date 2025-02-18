@@ -54,6 +54,6 @@ $compras = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
     <?php include '../footer.php'; ?> <!-- Asegúrate de tener un pie de página -->
 </body>
-
+<script src="../../assets/bootstrap.bundle.min.js"></script>
 <script src="../../assets/bootstrap.bundle.min.js"></script>
 </html>

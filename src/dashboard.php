@@ -280,7 +280,7 @@ if ($idUsuario) {
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">Clientes</h5>
                     <p class="card-text">Administración de la cartera de clientes, historial y seguimiento.</p>
-                    <a href="/Farmacia/src/Clientes/clientes.php" class="btn btn-info btn-dashboard mt-auto text-white">
+                    <a href="\Farmacia\src\Clientes\clientes.php" class="btn btn-info btn-dashboard mt-auto text-white">
                         <i class="fas fa-address-card me-2"></i>Ver Clientes
                     </a>
                 </div>
@@ -296,7 +296,7 @@ if ($idUsuario) {
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">Ventas</h5>
                     <p class="card-text">Gestión de transacciones, facturas y registro de ventas diarias.</p>
-                    <a href="ventas.php" class="btn btn-warning btn-dashboard mt-auto text-dark">
+                    <a href="\Farmacia\src\Ventas\ventas.php" class="btn btn-warning btn-dashboard mt-auto text-dark">
                         <i class="fas fa-shopping-cart me-2"></i>Ver Ventas
                     </a>
                 </div>
@@ -312,7 +312,7 @@ if ($idUsuario) {
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">Compras</h5>
                     <p class="card-text">Control de adquisiciones, órdenes de compra y recepción de mercancía.</p>
-                    <a href="compras.php" class="btn btn-secondary btn-dashboard mt-auto">
+                    <a href="\Farmacia\src\Compras\compras.php" class="btn btn-secondary btn-dashboard mt-auto">
                         <i class="fas fa-shopping-basket me-2"></i>Ver Compras
                     </a>
                 </div>
@@ -328,7 +328,7 @@ if ($idUsuario) {
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">Proveedores</h5>
                     <p class="card-text">Administración de proveedores, contactos y catálogos de productos.</p>
-                    <a href="proveedores.php" class="btn btn-dark btn-dashboard mt-auto">
+                    <a href="\Farmacia\src\Prooveedores\proveedores.php" class="btn btn-dark btn-dashboard mt-auto">
                         <i class="fas fa-handshake me-2"></i>Ver Proveedores
                     </a>
                 </div>

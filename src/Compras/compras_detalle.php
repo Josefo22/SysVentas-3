@@ -34,12 +34,16 @@ $detalles = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detalle de Compra</title>
+    <link rel="stylesheet" href="../../style/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <?php include '../navbar.php'; ?> <!-- Asegúrate de tener una barra de navegación -->
 
     <div class="container mt-5">
+    <form action="compras.php" method="get">
+            <button type="submit" class="btn btn-primary mb-3">Volver</button>
+        </form>
         <h1>Detalle de Compra</h1>
         <p><strong>Proveedor:</strong> <?php echo $compra['proveedor']; ?></p>
         <p><strong>Fecha:</strong> <?php echo $compra['fecha']; ?></p>

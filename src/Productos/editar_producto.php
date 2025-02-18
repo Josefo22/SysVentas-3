@@ -69,9 +69,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="mb-3">
-                <label for="categoria_id" class="form-label">ID de Categoría:</label>
-                <input type="number" id="categoria_id" name="categoria_id" class="form-control" value="<?= $producto['categoria_id'] ?>" required>
-            </div>
+               <label for="categoria_nombre" class="form-label">Categoría:</label>
+               <input type="text" id="categoria_nombre" name="categoria_nombre" class="form-control" value="" required>
+               <input type="hidden" id="categoria_id" name="categoria_id" value="<?= $producto['categoria_id'] ?>">
+           </div>
+
 
             <div class="text-center">
                 <button type="submit" class="btn btn-primary">Guardar cambios</button>
@@ -82,6 +84,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </div>
 <br>
 <?php include '../footer.php'; ?>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="../../assets/bootstrap.bundle.min.js"></script>
+<!-- jQuery y jQuery UI para Autocompletado -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+<script>
+$(function() {
+    $("#categoria_nombre").autocomplete({
+        source: "buscar_categorias.php",
+        minLength: 2,
+        select: function(event, ui) {
+            $("#categoria_nombre").val(ui.item.label); // Nombre de la categoría
+            $("#categoria_id").val(ui.item.id); // ID de la categoría
+            return false;
+        }
+    });
+});
+</script>
+
 </body>
 </html>

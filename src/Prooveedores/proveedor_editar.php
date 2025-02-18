@@ -46,7 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php include '../navbar.php'; ?>
 
 <div class="container mt-5">
+<form action=".\proveedores.php">
+            <button type="submit" class="btn btn-primary mb-3">Volver</button>
+        </form>
     <h1>Editar Proveedor</h1>
+    
 
     <form action="proveedor_editar.php?id=<?php echo $proveedor['id']; ?>" method="POST">
         <div class="mb-3">
@@ -69,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <button type="submit" class="btn btn-primary">Actualizar Proveedor</button>
     </form>
 </div>
-
+<br>
 <?php include '../footer.php'; ?>
 <script src="../../assets/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

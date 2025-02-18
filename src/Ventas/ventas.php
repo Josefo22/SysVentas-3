@@ -23,61 +23,180 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
     <style>
-        /* Estilo básico para el botón */
-.btn {
-    background-color: #4CAF50; /* Verde */
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-}
+        body {
+            background-color: #f8f9fa;
+        }
+        
+        .page-header {
+            background-color: #fff;
+            padding: 20px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
 
-/* Efecto al pasar el ratón por encima */
-.btn:hover {
-    background-color: #45a049;
-}
+        .page-title {
+            color: #2c3e50;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
 
+        .action-buttons {
+            gap: 10px;
+        }
+
+        .btn {
+            border-radius: 5px;
+            padding: 8px 16px;
+            transition: all 0.3s;
+        }
+
+        .btn-success {
+            background-color: #2ecc71;
+            border: none;
+        }
+
+        .btn-success:hover {
+            background-color: #27ae60;
+            transform: translateY(-2px);
+        }
+        
+        .btn-primary {
+            background-color: #3498db;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background-color: #e74c3c;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+        }
+
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+        }
+
+        .card-header {
+            border-radius: 8px 8px 0 0 !important;
+            background-color: #34495e;
+            color: white;
+            padding: 15px 20px;
+        }
+
+        .card-body {
+            padding: 25px;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 0 0.2rem rgba(52, 73, 94, 0.25);
+            border-color: #34495e;
+        }
+
+        .input-group-text {
+            background-color: #f1f3f5;
+            border: 1px solid #ddd;
+        }
+
+        .table thead th {
+            background-color: #f1f3f5;
+            color: #2c3e50;
+            padding: 12px;
+        }
+
+        .table tbody td {
+            padding: 12px;
+            vertical-align: middle;
+        }
+
+        .alert-info {
+            background-color: #e8f4f8;
+            border-color: #d1e7f0;
+            color: #0c5460;
+        }
+
+        .badge-primary {
+            background-color: #3498db;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-weight: 500;
+        }
+
+        .badge-success {
+            background-color: #2ecc71;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-weight: 500;
+        }
+
+        .border-primary {
+            border-color: #3498db !important;
+        }
+
+        .text-primary {
+            color: #3498db !important;
+        }
     </style>
 </head>
 <body>
     <?php include '../navbar.php'; ?>
-    <div class="container mt-5">
-    <!-- Fila para los botones -->
-    <div class="row mb-4">
-        <div class="col-md-6">
-            <!-- Botón para listar ventas -->
-            <form action="ventas_listar.php" method="get">
-                <button type="submit" class="btn btn-primary btn-lg w-100">
+    
+    <div class="page-header">
+        <div class="container">
+            <h2 class="text-center page-title">
+                <i class="fas fa-cash-register me-2"></i>Registro de Ventas
+            </h2>
+            <div class="d-flex justify-content-center action-buttons">
+                <a href="ventas_listar.php" class="btn btn-primary">
                     <i class="fas fa-list me-2"></i>Ver Listado de Ventas
-                </button>
-            </form>
+                </a>
+            </div>
         </div>
     </div>
 
-    <!-- Tarjeta para la nueva venta -->
-    <div class="card shadow-lg">
-        <div class="card-header bg-primary text-white">
-            <h3 class="mb-0"><i class="fas fa-cash-register me-2"></i>Nueva Venta</h3>
-        </div>
+    <div class="container mb-5">
+        <!-- Tarjeta para la nueva venta -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0"><i class="fas fa-shopping-cart me-2"></i>Nueva Venta</h3>
+            </div>
             <div class="card-body">
                 <form id="ventaForm" method="post" action="procesar_venta.php">
                     <!-- Sección Cliente -->
                     <div class="row mb-4">
                         <div class="col-md-12">
                             <label class="form-label">Buscar Cliente:</label>
-                            <div class="input-group">
+                            <div class="input-group mb-2">
                                 <input type="text" id="buscarCliente" class="form-control" 
                                        placeholder="Escriba el nombre del cliente...">
                                 <span class="input-group-text"><i class="fas fa-user"></i></span>
                             </div>
                             <input type="hidden" name="cliente_id" id="cliente_id">
-                            <div class="mt-2" id="infoCliente"></div>
+                            <div class="mt-3" id="infoCliente"></div>
                         </div>
                     </div>
 
@@ -93,14 +212,19 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
                         </div>
                         <div class="col-md-4">
                             <label class="form-label">Cantidad:</label>
-                            <input type="number" id="cantidad" class="form-control" min="1" value="1">
+                            <div class="input-group">
+                                <input type="number" id="cantidad" class="form-control" min="1" value="1">
+                                <button type="button" id="agregarBtn" class="btn btn-primary">
+                                    <i class="fas fa-plus me-1"></i>Agregar
+                                </button>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Lista de Productos Seleccionados -->
                     <div class="table-responsive mb-4">
                         <table class="table table-bordered">
-                            <thead class="table-light">
+                            <thead>
                                 <tr>
                                     <th>Producto</th>
                                     <th>Precio Unitario</th>
@@ -120,8 +244,10 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
                         <div class="col-md-4">
                             <div class="card border-primary">
                                 <div class="card-body">
-                                    <h5 class="card-title">Total de la Venta</h5>
-                                    <div class="h4 text-primary" id="totalVenta">$0.00</div>
+                                    <h5 class="card-title text-primary">
+                                        <i class="fas fa-calculator me-2"></i>Total de la Venta
+                                    </h5>
+                                    <div class="h3 text-primary fw-bold" id="totalVenta">$0.00</div>
                                     <input type="hidden" name="total" id="total">
                                     <input type="hidden" name="productos" id="productos">
                                 </div>
@@ -138,10 +264,11 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
-<br>
+
     <?php include '../footer.php'; ?>
 
     <!-- Scripts -->
+    <script src="../../assets/bootstrap.bundle.min.js"></script>
     <script src="../../assets/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
@@ -153,36 +280,64 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
             minLength: 2,
             select: function(event, ui) {
                 $('#cliente_id').val(ui.item.id);
-                $('#nombreCliente').val(ui.item.nombre);
-                $('#telefonoCliente').val(ui.item.telefono);
-                $('#direccionCliente').val(ui.item.direccion);
-                $('#correoCliente').val(ui.item.correo);
-
+                
                 // Mostrar información del cliente seleccionado
                 $('#infoCliente').html(`
-                    <div class="alert alert-info p-2">
-                        <strong>Cliente seleccionado:</strong> ${ui.item.nombre}<br>
-                        <strong>Teléfono:</strong> ${ui.item.telefono}<br>
-                        <strong>Dirección:</strong> ${ui.item.direccion}<br>
-                        <strong>Correo:</strong> ${ui.item.correo}
+                    <div class="alert alert-info p-3">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fas fa-user-circle fs-4 me-2"></i>
+                            <strong class="fs-5">${ui.item.nombre}</strong>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="mb-1">
+                                    <i class="fas fa-phone me-2"></i>
+                                    <span class="badge-primary">${ui.item.telefono}</span>
+                                </p>
+                                <p class="mb-1">
+                                    <i class="fas fa-envelope me-2"></i>
+                                    <span class="badge-primary">${ui.item.correo || 'No disponible'}</span>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-1">
+                                    <i class="fas fa-map-marker-alt me-2"></i>
+                                    ${ui.item.direccion || 'No disponible'}
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 `);
             }
         });
 
         // Autocompletado para Productos
+        let productoSeleccionado = null;
+        
         $('#buscarProducto').autocomplete({
             source: 'buscar_productos.php',
             minLength: 2,
             select: function(event, ui) {
-                agregarProducto(ui.item);
+                productoSeleccionado = ui.item;
+                return false;
+            }
+        });
+
+        // Botón para agregar producto
+        $('#agregarBtn').click(function() {
+            if (productoSeleccionado) {
+                agregarProducto(productoSeleccionado);
                 $('#buscarProducto').val('');
+                productoSeleccionado = null;
+            } else {
+                alert('Por favor, seleccione un producto primero');
             }
         });
 
         function actualizarTotal() {
             let total = 0;
             let productos = [];
+            
             $('#productosSeleccionados tr').each(function() {
                 const id = $(this).data('id');
                 const nombre = $(this).find('td:eq(0)').text();
@@ -205,7 +360,7 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
             $('#total').val(total.toFixed(2));
 
             // Asignar los productos al campo oculto
-            $('#productos').val(JSON.stringify(productos)); // Aquí llenamos el campo oculto
+            $('#productos').val(JSON.stringify(productos));
         }
 
         // Función para agregar productos a la tabla
@@ -215,10 +370,15 @@ $clientes = $stmtClientes->fetchAll(PDO::FETCH_ASSOC);
             
             const nuevaFila = `
                 <tr data-id="${producto.id}">
-                    <td>${producto.nombre}</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-box text-secondary me-2"></i>
+                            ${producto.nombre}
+                        </div>
+                    </td>
                     <td>$${producto.precio}</td>
                     <td>${cantidad}</td>
-                    <td>$${subtotal}</td>
+                    <td class="fw-bold">$${subtotal}</td>
                     <td>
                         <button class="btn btn-danger btn-sm remover-producto">
                             <i class="fas fa-trash"></i>

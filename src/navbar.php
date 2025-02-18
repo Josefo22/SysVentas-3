@@ -67,19 +67,13 @@ if (session_status() == PHP_SESSION_NONE) {
                         <i class="bi bi-file-earmark-text me-1"></i>Reportes
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="reportesDropdown">
-                        <li><a class="dropdown-item" href="/Farmacia/src/reportes/reporte_usuarios.php">
-                            <i class="bi bi-people me-2"></i>Usuarios</a></li>
                         <li><a class="dropdown-item" href="/Farmacia/src/reportes/reporte_productos.php">
                             <i class="bi bi-box-seam me-2"></i>Productos</a></li>
-                        <li><a class="dropdown-item" href="/Farmacia/src/reportes/reporte_clientes.php">
-                            <i class="bi bi-person-vcard me-2"></i>Clientes</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="/Farmacia/src/reportes/reporte_ventas.php">
                             <i class="bi bi-cart-check me-2"></i>Ventas</a></li>
                         <li><a class="dropdown-item" href="/Farmacia/src/reportes/reporte_compras.php">
                             <i class="bi bi-cart-plus me-2"></i>Compras</a></li>
-                        <li><a class="dropdown-item" href="/Farmacia/src/reportes/reporte_proveedores.php">
-                            <i class="bi bi-truck me-2"></i>Proveedores</a></li>
                     </ul>
                 </li>
                 

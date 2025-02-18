@@ -2,17 +2,10 @@
 session_start();
 require_once "../../db.php";
 
-// Verificar si el usuario está autenticado
-if (!isset($_SESSION['usuario'])) {
-    header("Location: login.php");
-    exit();
-}
-
-// Verificar que la solicitud sea POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Obtener los productos desde el formulario
-    if (!isset($_POST['productos']) || empty($_POST['productos'])) {
-        echo json_encode(["status" => "error", "message" => "No se recibieron productos."]);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Validate input data
+    if (!isset($_POST['productos']) || !isset($_POST['cliente_id']) || !isset($_POST['total'])) {
+        echo json_encode(["status" => "error", "message" => "No se recibieron los datos necesarios."]);
         exit();
     }
 
@@ -20,27 +13,40 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $cliente_id = $_POST['cliente_id'];
     $total = $_POST['total'];
 
-    // Validaciones
+    // Validate products
     if (empty($productos)) {
         echo json_encode(["status" => "error", "message" => "No hay productos en la venta."]);
         exit();
     }
 
-    // Iniciar la transacción
     try {
-        // Comenzar la transacción
+        // Begin transaction
         $conn->beginTransaction();
 
-        // Insertar la venta en la base de datos (tabla ventas)
+        // Insert sale
         $stmt = $conn->prepare("INSERT INTO ventas (cliente_id, total, fecha) VALUES (?, ?, NOW())");
         $stmt->execute([$cliente_id, $total]);
-
-        // Obtener el ID de la venta recién insertada
         $venta_id = $conn->lastInsertId();
 
-        // Insertar los productos de la venta en la tabla detalle_venta
+        // Process each product
         foreach ($productos as $producto) {
-            $stmt = $conn->prepare("INSERT INTO detalle_venta (venta_id, producto_id, cantidad, precio, subtotal) VALUES (?, ?, ?, ?, ?)");
+            // Verify current stock
+            $stmt = $conn->prepare("SELECT stock FROM productos WHERE id = ? FOR UPDATE");
+            $stmt->execute([$producto['id']]);
+            $current_stock = $stmt->fetchColumn();
+
+            // Validate if there's enough stock
+            if ($current_stock < $producto['cantidad']) {
+                throw new Exception("Stock insuficiente para el producto ID: " . $producto['id']);
+            }
+
+            // Update product stock
+            $stmt = $conn->prepare("UPDATE productos SET stock = stock - ? WHERE id = ?");
+            $stmt->execute([$producto['cantidad'], $producto['id']]);
+
+            // Insert sale detail
+            $stmt = $conn->prepare("INSERT INTO detalle_venta (venta_id, producto_id, cantidad, precio, subtotal) 
+                                  VALUES (?, ?, ?, ?, ?)");
             $stmt->execute([
                 $venta_id,
                 $producto['id'],
@@ -50,25 +56,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             ]);
         }
 
-        // Confirmar la transacción
+        // Commit transaction
         $conn->commit();
 
-        // Redirigir al script que genera el PDF de la factura
+        // Redirect to PDF generation
         header("Location: ../../assets/pdf/generar.php?venta_id=" . $venta_id);
         exit();
 
     } catch (Exception $e) {
-        // Si ocurre un error, revertir la transacción
+        // Rollback on error
         if ($conn->inTransaction()) {
             $conn->rollBack();
         }
 
-        // Loguear el error para depuración
+        // Log error
         error_log("Error al procesar la venta: " . $e->getMessage());
         error_log("Detalles de la venta: " . print_r($productos, true));
 
-        // Mostrar mensaje de error al usuario
-        echo json_encode(["status" => "error", "message" => "Hubo un error al procesar la venta. Verifica los logs para más detalles."]);
+        // Return error message
+        echo json_encode([
+            "status" => "error", 
+            "message" => "Error al procesar la venta: " . $e->getMessage()
+        ]);
         exit();
     }
 } else {

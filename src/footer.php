@@ -25,12 +25,13 @@
             </div>
             
             <div class="col-md-4 text-md-end text-center">
-                <a href="" class="btn btn-outline-light btn-sm mb-2">
-                    <i class="bi bi-chat-text me-1"></i>Contacto
-                </a>
+            <a href="mailto:incoder222@gmail.com" class="btn btn-outline-light btn-sm mb-2">
+                <i class="bi bi-chat-text me-1"></i>Contacto
+            </a>
+
                 <p class="small mb-0">
-                    <a href="" class="text-white text-decoration-none small">Política de Privacidad</a> |
-                    <a href="" class="text-white text-decoration-none small">Términos de Uso</a>
+                    <a href="politica_privacidad.html" class="text-white text-decoration-none small">Política de Privacidad</a> |
+                    <a href="terminos_uso.html" class="text-white text-decoration-none small">Términos de Uso</a>
                 </p>
             </div>
         </div>
